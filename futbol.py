@@ -73,8 +73,8 @@ class Abou(pg.sprite.Sprite):
 
 
 class Top(pg.sprite.Sprite):
-    """moves a monkey critter across the screen. it can spin the
-    monkey when it is headed."""
+    """moves a ball critter across the screen. it can spin the
+    ball when it is headed."""
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self)  # call Sprite initializer
@@ -94,7 +94,7 @@ class Top(pg.sprite.Sprite):
             self._walk()
 
     def _walk(self):
-        """move the monkey across the screen, and turn at the ends"""
+        """move the ball across the screen, and turn at the ends"""
         newpos = self.rect.move((self.x_move, self.y_move))
         if not self.area.contains(newpos):
             if self.rect.left < self.area.left or self.rect.right > self.area.right:
@@ -108,7 +108,7 @@ class Top(pg.sprite.Sprite):
         self.rect = newpos
 
     def _spin(self):
-        """spin the monkey image"""
+        """spin the ball image"""
         center = self.rect.center
         self.dizzy = self.dizzy + 12
         if self.dizzy >= 360:
@@ -121,7 +121,7 @@ class Top(pg.sprite.Sprite):
         self.rect = self.image.get_rect(center=center)
 
     def headed(self):
-        """this will cause the monkey to start spinning"""
+        """this will cause the ball to start spinning"""
         if not self.dizzy:
             self.dizzy = True
             self.original = self.image
@@ -131,7 +131,7 @@ def main():
     # Initialize Everything
     pg.init()
     screen = pg.display.set_mode((900, 900), pg.SCALED)
-    pg.display.set_caption("i can football")
+    pg.display.set_caption("Vincent Paté Aboubakar")
     pg.mouse.set_visible(False)
 
     # Create The Background
@@ -142,7 +142,7 @@ def main():
     # Put Text On The Background, Centered
     if pg.font:
         font = pg.font.Font(None, 16)
-        text = font.render("i can football", True, (10, 10, 10))
+        text = font.render("Vincent Paté Aboubakar", True, (10, 10, 10))
         textpos = text.get_rect(centerx=background.get_width() / 2, y=10)
         background.blit(text, textpos)
 
