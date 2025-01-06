@@ -45,22 +45,22 @@ def load_sound(name):
 
 
 # classes for our game objects
-class Abou(pg.sprite.Sprite):
+class Fist(pg.sprite.Sprite):
     
     def __init__(self):
         pg.sprite.Sprite.__init__(self)  # call Sprite initializer
-        self.image, self.rect = load_image("abou.png", -1, 1, (200, 200))
+        self.image, self.rect = load_image("fist.png", -1, 1, (200, 200))
         self.heading = False
 
     def update(self):
-        """move the abou based on the mouse position"""
+        """move the fist based on the mouse position"""
         pos = pg.mouse.get_pos()
         self.rect.topleft = pos
         if self.heading:
             self.rect.move_ip(0, -50)
 
     def head(self, target):
-        """returns true if the abou collides with the target"""
+        """returns true if the fist collides with the target"""
         if not self.heading:
             self.heading = True
             hitbox = self.rect.inflate(-50, -50)
@@ -68,17 +68,17 @@ class Abou(pg.sprite.Sprite):
             return hitbox.colliderect(target.rect)
 
     def unhead(self):
-        """called to pull the abou back"""
+        """called to pull the fist back"""
         self.heading = False
 
 
-class Top(pg.sprite.Sprite):
-    """moves a ball critter across the screen. it can spin the
-    ball when it is headed."""
+class Masu(pg.sprite.Sprite):
+    """moves a masuaku critter across the screen. it can spin the
+    masuaku when it is hit."""
 
     def __init__(self):
         pg.sprite.Sprite.__init__(self)  # call Sprite initializer
-        self.image, self.rect = load_image("top.png", -1, 0.25)
+        self.image, self.rect = load_image("masuaku.png", -1, 0.75)
         screen = pg.display.get_surface()
         self.area = screen.get_rect()
         self.rect.topleft = 10, 400
@@ -94,7 +94,7 @@ class Top(pg.sprite.Sprite):
             self._walk()
 
     def _walk(self):
-        """move the ball across the screen, and turn at the ends"""
+        """move the masuaku across the screen, and turn at the ends"""
         newpos = self.rect.move((self.x_move, self.y_move))
         if not self.area.contains(newpos):
             if self.rect.left < self.area.left or self.rect.right > self.area.right:
@@ -131,7 +131,7 @@ def main():
     # Initialize Everything
     pg.init()
     screen = pg.display.set_mode((900, 900), pg.SCALED)
-    pg.display.set_caption("Vincent Paté Aboubakar")
+    pg.display.set_caption("Masuaku Patakla")
     pg.mouse.set_visible(False)
 
     # Create The Background
@@ -142,7 +142,7 @@ def main():
     # Put Text On The Background, Centered
     if pg.font:
         font = pg.font.Font(None, 16)
-        text = font.render("Vincent Paté Aboubakar", True, (10, 10, 10))
+        text = font.render("Masuaku Patakla", True, (10, 10, 10))
         textpos = text.get_rect(centerx=background.get_width() / 2, y=10)
         background.blit(text, textpos)
 
@@ -152,10 +152,10 @@ def main():
 
     # Prepare Game Objects
     whiff_sound = load_sound("whiff.wav")
-    head_sound = load_sound("punch.wav")
-    top = Top()
-    abou = Abou()
-    allsprites = pg.sprite.RenderPlain((top, abou))
+    head_sound = load_sound("gururlan.mp3")
+    masu = Masu()
+    fist = Fist()
+    allsprites = pg.sprite.RenderPlain((masu, fist))
     clock = pg.time.Clock()
 
     # Main Loop
@@ -170,13 +170,13 @@ def main():
             elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 going = False
             elif event.type == pg.MOUSEBUTTONDOWN:
-                if abou.head(top):
+                if fist.head(masu):
                     head_sound.play()  # head
-                    top.headed()
+                    masu.headed()
                 else:
                     whiff_sound.play()  # miss
             elif event.type == pg.MOUSEBUTTONUP:
-                abou.unhead()
+                fist.unhead()
 
         allsprites.update()
 
