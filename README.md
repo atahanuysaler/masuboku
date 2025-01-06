@@ -1,2 +1,2 @@
-# aboukafa
-pygame example with aboubakar
+# masuboku
+pygame example with masuboku
